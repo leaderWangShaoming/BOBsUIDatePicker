@@ -16,5 +16,7 @@
 @property (nonatomic, copy) NSString *hourDate;
 @property (nonatomic, copy) NSString *minuteDate;
 @property (nonatomic, copy) NSString *weekDate;
+@property (nonatomic, copy) NSString *amPmDate;
+
 + (NSString*)formatDateTime:(NSString*)dateTime;
 @end

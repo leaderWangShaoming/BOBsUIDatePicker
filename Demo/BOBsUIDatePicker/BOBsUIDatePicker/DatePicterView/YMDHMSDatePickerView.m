@@ -9,6 +9,7 @@
 #import "YMDHMSDatePickerView.h"
 #import "YMDHMDatePickerView.h"
 #import "YMandDHMDatePickerView.h"
+#import "AMPMDatePickerView.h"
 
 #define Screen_height  [[UIScreen mainScreen] bounds].size.height
 #define Screen_width  [[UIScreen mainScreen] bounds].size.width
@@ -38,6 +39,15 @@
         case DatePickerModeDate:
         {
             YMandDHMDatePickerView *picterView=[YMandDHMDatePickerView initWithFrame:CGRectMake(0, 50, datePicterView.bounds.size.width, datePicterView.frame.size.height - 50) BGcolor:[UIColor colorWithRed:(float)249/255.0 green:(float)249/255.0 blue:(float)249/255.0 alpha:1]];
+            
+            //指定委托
+            picterView.delegate = datePicterView;
+            [datePicterView addSubview:picterView];
+        }
+            break;
+        case DatePickerModeDateAndTime:
+        {
+            AMPMDatePickerView *picterView=[AMPMDatePickerView initWithFrame:CGRectMake(0, 50, datePicterView.bounds.size.width, datePicterView.frame.size.height - 50) BGcolor:[UIColor colorWithRed:(float)249/255.0 green:(float)249/255.0 blue:(float)249/255.0 alpha:1]];
             
             //指定委托
             picterView.delegate = datePicterView;

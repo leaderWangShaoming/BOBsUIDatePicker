@@ -24,6 +24,7 @@
 		F5F72E721D643539008C0D62 /* YMDHMSDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F72E711D643539008C0D62 /* YMDHMSDatePickerView.m */; };
 		F5F72E751D643AC1008C0D62 /* YMDHMSDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F72E741D643AC1008C0D62 /* YMDHMSDataSource.m */; };
 		F5F72E7B1D645B7F008C0D62 /* YMandDHMDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F72E7A1D645B7F008C0D62 /* YMandDHMDatePickerView.m */; };
+		F5F72E7E1D649D0D008C0D62 /* AMPMDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F72E7D1D649D0D008C0D62 /* AMPMDatePickerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,8 @@
 		F5F72E741D643AC1008C0D62 /* YMDHMSDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMDHMSDataSource.m; sourceTree = "<group>"; };
 		F5F72E791D645B7F008C0D62 /* YMandDHMDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMandDHMDatePickerView.h; sourceTree = "<group>"; };
 		F5F72E7A1D645B7F008C0D62 /* YMandDHMDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMandDHMDatePickerView.m; sourceTree = "<group>"; };
+		F5F72E7C1D649D0D008C0D62 /* AMPMDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPMDatePickerView.h; sourceTree = "<group>"; };
+		F5F72E7D1D649D0D008C0D62 /* AMPMDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPMDatePickerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +190,8 @@
 				F5F72E641D640A75008C0D62 /* YMDHMDatePickerView.m */,
 				F5F72E791D645B7F008C0D62 /* YMandDHMDatePickerView.h */,
 				F5F72E7A1D645B7F008C0D62 /* YMandDHMDatePickerView.m */,
+				F5F72E7C1D649D0D008C0D62 /* AMPMDatePickerView.h */,
+				F5F72E7D1D649D0D008C0D62 /* AMPMDatePickerView.m */,
 			);
 			path = DatePicterView;
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 				F5F72E6C1D640C6C008C0D62 /* UIView+SizeXY.m in Sources */,
 				F5F72E681D640A75008C0D62 /* YMDHMDatePickerView.m in Sources */,
 				F5F72E301D640A66008C0D62 /* AppDelegate.m in Sources */,
+				F5F72E7E1D649D0D008C0D62 /* AMPMDatePickerView.m in Sources */,
 				F5F72E6F1D641443008C0D62 /* BOBsUIDatePicker.m in Sources */,
 				F5F72E751D643AC1008C0D62 /* YMDHMSDataSource.m in Sources */,
 				F5F72E721D643539008C0D62 /* YMDHMSDatePickerView.m in Sources */,

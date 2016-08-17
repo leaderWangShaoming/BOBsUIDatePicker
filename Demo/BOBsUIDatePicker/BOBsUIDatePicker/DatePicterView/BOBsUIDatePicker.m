@@ -31,7 +31,7 @@
     datePicterView.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
     
     //添加datePicterView
-    datePicterView.YMDHMDatePicker = [YMDHMSDatePickerView initWithFrame:frame DatePickType:datePickerType];
+    datePicterView.YMDHMDatePicker = [YMDHMSDatePickerView initWithFrame:frame DatePickType:DatePickerModeDateAndTime];
     datePicterView.YMDHMDatePicker.backgroundColor = [UIColor colorWithRed:(float)249/255.0 green:(float)249/255.0 blue:(float)249/255.0 alpha:1];
     [datePicterView addSubview:datePicterView.YMDHMDatePicker];
     [datePicterView.YMDHMDatePicker addSubview:datePicterView.tabbarView];
