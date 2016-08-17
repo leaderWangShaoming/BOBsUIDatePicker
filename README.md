@@ -1,0 +1,2 @@
+# BOBsUIDatePicker
+模仿UIDatePicker的一套自定义DatePicker时间选择器（系统时间选择器 对自定义功能权限不够，无法满足不同设计）。此选择器可以自定义文字大小和颜色，位置，时间类型等等
