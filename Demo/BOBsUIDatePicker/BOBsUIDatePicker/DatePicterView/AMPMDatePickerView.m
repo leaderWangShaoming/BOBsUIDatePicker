@@ -48,12 +48,14 @@
     self.hourDate = [[NSMutableArray alloc]init];
     self.minuteDate = [[NSMutableArray alloc]init];
     self.amPmDateArray = [[NSMutableArray alloc]initWithArray:@[@"AM", @"PM"]];
+    self.mouthDayDateArray = [[NSMutableArray alloc]init];
+    
     [self getCurrentDate];
     self.timePickerModel = [[DatePickerModel alloc]init];
     self.timePickerModel = self.currentTimePickerModel;
     
     //设置最小年份 和 最大 年份
-    for (int i = 2016; i <= 2040; i ++) {
+    for (int i = [self.currentTimePickerModel.yearDate intValue]; i <= 2040; i ++) {
         [self.yearDate addObject:[NSString stringWithFormat:@"%.d",i]];
     }
     for (int i = 1; i <= 12; i ++) {
@@ -72,8 +74,16 @@
         [self.minuteDate addObject:[NSString stringWithFormat:@"%02d",i]];
     }
     
-//    [self updateWeekDate];
-    
+    for (int i = 1; i <= self.mouthDate.count; i ++) {
+        int dayDateLen = [self updateDayDateYear:[self.currentTimePickerModel.yearDate intValue] chosenMonth:[self.mouthDate[i-1] intValue]];
+        for (int k = 1; k <= dayDateLen; k ++) {
+            [self.mouthDayDateArray addObject:[NSString stringWithFormat:@"%@月%d日",self.mouthDate[i-1],k]];
+        }
+        
+    }
+    self.timePickerModel.mouthDayDate = self.mouthDayDateArray[[self currentMouthDayDateIndex]];
+    //更新星期日期
+    [self updateWeekDate];
     [self.pickerView reloadAllComponents];
     
 }
@@ -81,11 +91,34 @@
 #pragma mark - 滚动到特定时间位置
 - (void)scrollToSelectDate {
 
-    [self.pickerView selectRow:[self.timePickerModel.mouthDate integerValue] - 1 inComponent:0 animated:YES];
-    [self.pickerView selectRow:[self.timePickerModel.dayDate integerValue] - 1 inComponent:1 animated:YES];
-    [self.pickerView selectRow:[self selectAMPMDateIndex:self.timePickerModel.amPmDate] inComponent:2 animated:YES];
-    [self.pickerView selectRow:[self.timePickerModel.hourDate integerValue] - 1 inComponent:3 animated:YES];
-    [self.pickerView selectRow:[self.timePickerModel.minuteDate integerValue] - 0 inComponent:4 animated:YES];
+    [self.pickerView selectRow:[self selectmouthDayDateIndex] inComponent:0 animated:YES];
+    [self.pickerView selectRow:[self selectAMPMDateIndex:self.timePickerModel.amPmDate] inComponent:1 animated:YES];
+    [self.pickerView selectRow:[self.timePickerModel.hourDate integerValue] - 1 inComponent:2 animated:YES];
+    [self.pickerView selectRow:[self.timePickerModel.minuteDate integerValue] - 0 inComponent:3 animated:YES];
+}
+
+- (int)currentMouthDayDateIndex {
+
+    int mouthDayIndex = 0;
+    for (int i = 1; i <= self.mouthDate.count; i ++) {
+        int dayDateLen = [self updateDayDateYear:[self.currentTimePickerModel.yearDate intValue] chosenMonth:[self.mouthDate[i-1] intValue]];
+        if (i < [self.timePickerModel.mouthDate intValue]) {
+            mouthDayIndex += dayDateLen;
+        } else if (i == [self.timePickerModel.mouthDate intValue]) {
+            
+            mouthDayIndex += [self.timePickerModel.dayDate intValue];
+        }
+    }
+    return mouthDayIndex;
+}
+
+- (int)selectmouthDayDateIndex {
+    for (int i = 0; i < self.mouthDayDateArray.count; i ++) {
+        if ([self.timePickerModel.mouthDayDate isEqualToString:self.mouthDayDateArray[i]]) {
+            return i;
+        }
+    }
+    return 0;
 }
 
 - (int)selectAMPMDateIndex:(NSString*)AMPMDate {
@@ -105,10 +138,10 @@
     switch (component) {
         
         case 0:
-            result = self.mouthDate.count;
+            result = self.mouthDayDateArray.count;
             break;
         case 1:
-            result = self.dayDate.count;//根据数组的元素个数返回几行数据
+            result = 1;
             break;
         case 2:
             result = self.amPmDateArray.count;
@@ -142,12 +175,11 @@
     switch (component) {
         
         case 0:
-            title = [NSString stringWithFormat:@"%@月",self.mouthDate[row]];
+            title = [NSString stringWithFormat:@"%@",self.mouthDayDateArray[row]];
             break;
         case 1:
-            title = [NSString stringWithFormat:@"%@日",self.dayDate[row]];
+            title = [NSString stringWithFormat:@"%@",self.timePickerModel.weekDate];
             break;
-            
         case 2:
             title = self.amPmDateArray[row];
             break;
@@ -169,37 +201,22 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
     if (component == 0) {
-        self.timePickerModel.mouthDate = self.mouthDate[row];
-    } else if (component == 1) {
-        self.timePickerModel.dayDate = self.dayDate[row];
+        self.timePickerModel.mouthDayDate = self.mouthDayDateArray[row];
         
-    } else if (component == 2) {
+        NSArray *mouthDayArray = [self.timePickerModel.mouthDayDate componentsSeparatedByString:@"月"]; //从字符月中分隔成2个元素的数组3月8日  --3 ， 8日
+        self.timePickerModel.mouthDate = [mouthDayArray firstObject];
+        self.timePickerModel.dayDate = [NSString stringWithFormat:@"%d",[[mouthDayArray lastObject] intValue]];
+        //更新星期日期
+        [self updateWeekDate];
+    } else if (component == 1) {
         self.timePickerModel.amPmDate = self.amPmDateArray[row];
         
-    } else if (component == 3) {
+    } else if (component == 2) {
         self.timePickerModel.hourDate = self.hourDate[row];
-    } else if (component == 4) {
+    } else if (component == 3) {
         self.timePickerModel.minuteDate = self.minuteDate[row];
     }
-    
-    if (component <= 1) {
-        int chosenYear;
-        int chosenMonth;
-        
-        chosenYear = [self.timePickerModel.yearDate intValue];
-        chosenMonth = [self.timePickerModel.mouthDate intValue];
-        int DayDateLen = [self updateDayDateYear:chosenYear chosenMonth:chosenMonth];
-        
-        if ([self.timePickerModel.dayDate intValue] > DayDateLen) {
-            self.timePickerModel.dayDate = [NSString stringWithFormat:@"%d",DayDateLen];
-        }
-        self.dayDate = [[NSMutableArray alloc]init];
-        for (int i = 1; i <= DayDateLen; i ++) {
-            [self.dayDate addObject:[NSString stringWithFormat:@"%d",i]];
-        }
-        
-    }
-    
+   
     [self scrollToSelectDate];
     [self.pickerView reloadAllComponents];
 }

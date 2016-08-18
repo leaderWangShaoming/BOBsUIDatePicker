@@ -14,6 +14,7 @@
 
 @interface ViewController ()<BOBsUIDatePickerDelegate>
 @property(nonatomic, strong) BOBsUIDatePicker *datePicterView;
+@property (nonatomic, assign) NSInteger btnTag;
 @end
 
 @implementation ViewController
@@ -21,18 +22,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    UIButton *sureBtn = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 200, 100)];
-    sureBtn.tag = 2;
-    [self setupButton:sureBtn Title:@"显示时间选择器" Color:[UIColor colorWithRed:(float)201/255.0 green:(float)52/255.0 blue:(float)21/255.0 alpha:1]];
-    
+    NSArray *titleArray = @[@"时间选择器:DatePickerModeTime",@"时间选择器:DatePickerModeDate",@"时间选择器:DatePickerModeDateAndTime",];
+    for (int i=0; i<3; i++) {
+        
+        [self addButton:100 + i*80 tag:i Title:titleArray[i]];
+    }
+}
+
+- (void)addButton:(float)orgY tag:(NSInteger)tag Title:(NSString*)Title{
+    UIButton *sureBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, orgY, self.view.frame.size.width, 60)];
+    sureBtn.tag = tag;
+    [self setupButton:sureBtn Title:Title Color:[UIColor colorWithRed:(float)201/255.0 green:(float)52/255.0 blue:(float)21/255.0 alpha:1]];
     [self.view addSubview:sureBtn];
+    
 }
 
 #pragma mark - 时间选择器
 - (BOBsUIDatePicker *)datePicterView{
     if (!_datePicterView) {
-        _datePicterView = [BOBsUIDatePicker initWithFrame:CGRectMake(0, Screen_height - 300, Screen_width, 300) DatePickType:DatePickerModeDate];
+        _datePicterView = [BOBsUIDatePicker initWithFrame:CGRectMake(0, Screen_height - 300, Screen_width, 300) DatePickType:self.btnTag == 0 ? DatePickerModeTime : (self.btnTag == 1 ? DatePickerModeDate : DatePickerModeDateAndTime)];
         _datePicterView.delegate = self;
         [self.view addSubview:_datePicterView];
     }
@@ -52,8 +60,8 @@
 }
 #pragma mark - 按钮事件
 - (void)buttonClick:(UIButton*)button {
-    //调用方法
-    self.datePicterView.tag = 102;
+     _datePicterView = nil;
+     self.btnTag = button.tag;
     [self.datePicterView setupShow];
     [self.datePicterView setupMsgLabel:@"时间选择器标题"];
 }

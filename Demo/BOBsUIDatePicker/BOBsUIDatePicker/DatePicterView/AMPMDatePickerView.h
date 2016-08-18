@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "YMDHMDatePickerView.h"
-@interface AMPMDatePickerView : YMDHMDatePickerView
+#import "YMandDHMDatePickerView.h"
+@interface AMPMDatePickerView : YMandDHMDatePickerView
 @property (nonatomic,strong)NSMutableArray * amPmDateArray;
+@property (nonatomic,strong)NSMutableArray * mouthDayDateArray;
 @end

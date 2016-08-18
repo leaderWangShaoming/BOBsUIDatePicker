@@ -54,7 +54,7 @@
     self.timePickerModel = self.currentTimePickerModel;
     
     //设置最小年份 和 最大 年份
-    for (int i = 2016; i <= 2040; i ++) {
+    for (int i = [self.currentTimePickerModel.yearDate intValue]; i <= 2040; i ++) {
         [self.yearDate addObject:[NSString stringWithFormat:@"%.d",i]];
     }
     for (int i = 1; i <= 12; i ++) {
@@ -97,7 +97,7 @@
 #pragma mark - 滚动到特定时间位置
 - (void)scrollToSelectDate {
     
-    [self.pickerView selectRow:[self.timePickerModel.yearDate integerValue] - 2016 inComponent:0 animated:YES];
+    [self.pickerView selectRow:[self.timePickerModel.yearDate integerValue] - [self.currentTimePickerModel.yearDate intValue] inComponent:0 animated:YES];
     [self.pickerView selectRow:[self.timePickerModel.mouthDate integerValue] - 1 inComponent:1 animated:YES];
     [self.pickerView selectRow:[self.timePickerModel.dayDate integerValue] - 1 inComponent:2 animated:YES];
     [self.pickerView selectRow:[self selectWeekDateIndex:self.timePickerModel.weekDate] inComponent:3 animated:YES];
