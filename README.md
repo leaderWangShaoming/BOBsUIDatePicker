@@ -31,13 +31,13 @@
 
 #### 屏幕截图：
 
-![image](https://github.com/niexiaobo/BOBsUIDatePicker/tree/master/Demo/BOBsUIDatePicker/BOBsUIDatePicker/shotImages/a1)
+![image](https://github.com/niexiaobo/BOBsUIDatePicker/blob/master/Demo/BOBsUIDatePicker/BOBsUIDatePicker/shotImages/a1.png)
 
-![image](https://github.com/niexiaobo/BOBsUIDatePicker/tree/master/Demo/BOBsUIDatePicker/BOBsUIDatePicker/shotImages/a2)
+![image](https://github.com/niexiaobo/BOBsUIDatePicker/tree/master/Demo/BOBsUIDatePicker/BOBsUIDatePicker/shotImages/a2.png)
 
-![image](https://github.com/niexiaobo/BOBsUIDatePicker/tree/master/Demo/BOBsUIDatePicker/BOBsUIDatePicker/shotImages/a3)
+![image](https://github.com/niexiaobo/BOBsUIDatePicker/tree/master/Demo/BOBsUIDatePicker/BOBsUIDatePicker/shotImages/a3.png)
 
-![image](https://github.com/niexiaobo/BOBsUIDatePicker/tree/master/Demo/BOBsUIDatePicker/BOBsUIDatePicker/shotImages/a4)
+![image](https://github.com/niexiaobo/BOBsUIDatePicker/tree/master/Demo/BOBsUIDatePicker/BOBsUIDatePicker/shotImages/a4.png)
 
 
 
