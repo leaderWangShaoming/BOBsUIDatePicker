@@ -10,6 +10,9 @@
 #import "DatePickerModel.h"
 #import "UIView+SizeXY.h"
 
+#define DupliCount 100
+#define DupliCountSelect 50
+
 @protocol YMDHMDatePickerViewDelegate <NSObject>
 
 @end

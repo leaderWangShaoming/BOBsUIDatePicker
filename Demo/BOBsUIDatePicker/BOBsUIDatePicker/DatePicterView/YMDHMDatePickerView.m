@@ -12,6 +12,8 @@
 #define Screen_height  [[UIScreen mainScreen] bounds].size.height
 #define Screen_width  [[UIScreen mainScreen] bounds].size.width
 
+
+
 @interface YMDHMDatePickerView()<UIPickerViewDataSource,UIPickerViewDelegate>
 //遵循协议
 
@@ -86,11 +88,11 @@
 #pragma mark - 滚动到特定时间位置
 - (void)scrollToSelectDate {
     
-    [self.pickerView selectRow:[self.timePickerModel.yearDate integerValue] - 2016 inComponent:0 animated:YES];
-    [self.pickerView selectRow:[self.timePickerModel.mouthDate integerValue] - 1 inComponent:1 animated:YES];
-    [self.pickerView selectRow:[self.timePickerModel.dayDate integerValue] - 1 inComponent:2 animated:YES];
-    [self.pickerView selectRow:[self.timePickerModel.hourDate integerValue] - 1 inComponent:3 animated:YES];
-    [self.pickerView selectRow:[self.timePickerModel.minuteDate integerValue] - 0 inComponent:4 animated:YES];
+    [self.pickerView selectRow:([self.timePickerModel.yearDate integerValue] - 2016 + self.yearDate.count * DupliCountSelect) inComponent:0 animated:YES];
+    [self.pickerView selectRow:[self.timePickerModel.mouthDate integerValue] - 1 + self.mouthDate.count * DupliCountSelect inComponent:1 animated:YES];
+    [self.pickerView selectRow:[self.timePickerModel.dayDate integerValue] - 1 + self.dayDate.count * DupliCountSelect inComponent:2 animated:YES];
+    [self.pickerView selectRow:[self.timePickerModel.hourDate integerValue] - 1 + self.hourDate.count * DupliCountSelect inComponent:3 animated:YES];
+    [self.pickerView selectRow:[self.timePickerModel.minuteDate integerValue] - 0 + self.minuteDate.count * DupliCountSelect inComponent:4 animated:YES];
 }
 
 #pragma mark - 当前时间
@@ -176,19 +178,19 @@
     NSInteger result = 0;
     switch (component) {
         case 0:
-            result = self.yearDate.count;//根据数组的元素个数返回几行数据
+            result = self.yearDate.count * DupliCount;//根据数组的元素个数返回几行数据
             break;
         case 1:
-            result = self.mouthDate.count;
+            result = self.mouthDate.count * DupliCount;
             break;
         case 2:
-            result = self.dayDate.count;//根据数组的元素个数返回几行数据
+            result = self.dayDate.count * DupliCount;//根据数组的元素个数返回几行数据
             break;
         case 3:
-            result = self.hourDate.count;
+            result = self.hourDate.count * DupliCount;
             break;
         case 4:
-            result = self.minuteDate.count;
+            result = self.minuteDate.count * DupliCount;
             break;
         default:
             break;
@@ -212,20 +214,20 @@
     NSString * title = nil;
     switch (component) {
         case 0:
-            title = [NSString stringWithFormat:@"%@年",self.yearDate[row]];
+            title = [NSString stringWithFormat:@"%@年",self.yearDate[row% self.yearDate.count]];
             break;
         case 1:
-            title = [NSString stringWithFormat:@"%@月",self.mouthDate[row]];
+            title = [NSString stringWithFormat:@"%@月",self.mouthDate[row % self.mouthDate.count]];
             break;
         case 2:
-            title = [NSString stringWithFormat:@"%@日",self.dayDate[row]];
+            title = [NSString stringWithFormat:@"%@日",self.dayDate[row% self.dayDate.count]];
             break;
             
         case 3:
-            title = [NSString stringWithFormat:@"%@时",self.hourDate[row]];
+            title = [NSString stringWithFormat:@"%@时",self.hourDate[row% self.hourDate.count]];
             break;
         case 4:
-            title = [NSString stringWithFormat:@"%@分",self.minuteDate[row]];
+            title = [NSString stringWithFormat:@"%@分",self.minuteDate[row % self.minuteDate.count]];
             break;
         default:
             break;
@@ -239,16 +241,16 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
     if (component == 0) {
-        self.timePickerModel.yearDate = self.yearDate[row];
+        self.timePickerModel.yearDate = self.yearDate[row % self.yearDate.count];
     } else if (component == 1) {
-        self.timePickerModel.mouthDate = self.mouthDate[row];
+        self.timePickerModel.mouthDate = self.mouthDate[row % self.mouthDate.count];
     } else if (component == 2) {
-        self.timePickerModel.dayDate = self.dayDate[row];
+        self.timePickerModel.dayDate = self.dayDate[row % self.dayDate.count];
         
     } else if (component == 3) {
-        self.timePickerModel.hourDate = self.hourDate[row];
+        self.timePickerModel.hourDate = self.hourDate[row % self.hourDate.count];
     } else if (component == 4) {
-        self.timePickerModel.minuteDate = self.minuteDate[row];
+        self.timePickerModel.minuteDate = self.minuteDate[row % self.minuteDate.count];
     }
     
     if (component <= 1) {
@@ -256,12 +258,12 @@
         int chosenMonth;
         
         if (component == 0) {
-            chosenYear = [self.yearDate[row] intValue];
+            chosenYear = [self.yearDate[row % self.yearDate.count] intValue];
             chosenMonth = [self.timePickerModel.mouthDate intValue];
             
         } else if (component == 1) {
             chosenYear = [self.timePickerModel.yearDate intValue];
-            chosenMonth = [self.mouthDate[row] intValue];
+            chosenMonth = [self.mouthDate[row % self.mouthDate.count] intValue];
             
         }
         int DayDateLen = [self updateDayDateYear:chosenYear chosenMonth:chosenMonth];

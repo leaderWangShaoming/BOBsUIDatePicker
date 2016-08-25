@@ -24,7 +24,6 @@
     
     NSArray *titleArray = @[@"时间选择器:DatePickerModeTime",@"时间选择器:DatePickerModeDate",@"时间选择器:DatePickerModeDateAndTime",];
     for (int i=0; i<3; i++) {
-        
         [self addButton:100 + i*80 tag:i Title:titleArray[i]];
     }
 }

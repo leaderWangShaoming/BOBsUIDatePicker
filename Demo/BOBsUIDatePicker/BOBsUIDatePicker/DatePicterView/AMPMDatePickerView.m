@@ -85,7 +85,6 @@
     //更新星期日期
     [self updateWeekDate];
     [self.pickerView reloadAllComponents];
-    
 }
 
 #pragma mark - 滚动到特定时间位置
@@ -93,8 +92,8 @@
 
     [self.pickerView selectRow:[self selectmouthDayDateIndex] inComponent:0 animated:YES];
     [self.pickerView selectRow:[self selectAMPMDateIndex:self.timePickerModel.amPmDate] inComponent:1 animated:YES];
-    [self.pickerView selectRow:[self.timePickerModel.hourDate integerValue] - 1 inComponent:2 animated:YES];
-    [self.pickerView selectRow:[self.timePickerModel.minuteDate integerValue] - 0 inComponent:3 animated:YES];
+    [self.pickerView selectRow:[self.timePickerModel.hourDate integerValue] - 1 + self.hourDate.count * DupliCountSelect inComponent:2 animated:YES];
+    [self.pickerView selectRow:[self.timePickerModel.minuteDate integerValue] - 0 + self.minuteDate.count * DupliCountSelect inComponent:3 animated:YES];
 }
 
 - (int)currentMouthDayDateIndex {
@@ -147,10 +146,10 @@
             result = self.amPmDateArray.count;
             break;
         case 3:
-            result = self.hourDate.count;//根据数组的元素个数返回几行数据
+            result = self.hourDate.count * DupliCount;//根据数组的元素个数返回几行数据
             break;
         case 4:
-            result = self.minuteDate.count;//根据数组的元素个数返回几行数据
+            result = self.minuteDate.count * DupliCount;//根据数组的元素个数返回几行数据
             break;
         default:
             break;
@@ -184,10 +183,10 @@
             title = self.amPmDateArray[row];
             break;
         case 3:
-            title = [NSString stringWithFormat:@"%@时",self.hourDate[row]];
+            title = [NSString stringWithFormat:@"%@时",self.hourDate[row % self.hourDate.count]];
             break;
         case 4:
-            title = [NSString stringWithFormat:@"%@分",self.minuteDate[row]];
+            title = [NSString stringWithFormat:@"%@分",self.minuteDate[row % self.minuteDate.count]];
             break;
         default:
             break;
@@ -212,9 +211,9 @@
         self.timePickerModel.amPmDate = self.amPmDateArray[row];
         
     } else if (component == 2) {
-        self.timePickerModel.hourDate = self.hourDate[row];
+        self.timePickerModel.hourDate = self.hourDate[row % self.hourDate.count];
     } else if (component == 3) {
-        self.timePickerModel.minuteDate = self.minuteDate[row];
+        self.timePickerModel.minuteDate = self.minuteDate[row % self.minuteDate.count];
     }
    
     [self scrollToSelectDate];

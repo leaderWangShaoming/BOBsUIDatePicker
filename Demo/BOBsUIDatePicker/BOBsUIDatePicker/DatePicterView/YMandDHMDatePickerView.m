@@ -97,10 +97,10 @@
 #pragma mark - 滚动到特定时间位置
 - (void)scrollToSelectDate {
     
-    [self.pickerView selectRow:[self.timePickerModel.yearDate integerValue] - [self.currentTimePickerModel.yearDate intValue] inComponent:0 animated:YES];
-    [self.pickerView selectRow:[self.timePickerModel.mouthDate integerValue] - 1 inComponent:1 animated:YES];
-    [self.pickerView selectRow:[self.timePickerModel.dayDate integerValue] - 1 inComponent:2 animated:YES];
-    [self.pickerView selectRow:[self selectWeekDateIndex:self.timePickerModel.weekDate] inComponent:3 animated:YES];
+    [self.pickerView selectRow:[self.timePickerModel.yearDate integerValue] - [self.currentTimePickerModel.yearDate intValue] + self.yearDate.count * DupliCountSelect inComponent:0 animated:YES];
+    [self.pickerView selectRow:[self.timePickerModel.mouthDate integerValue] - 1 + self.mouthDate.count * DupliCountSelect inComponent:1 animated:YES];
+    [self.pickerView selectRow:[self.timePickerModel.dayDate integerValue] - 1 + self.dayDate.count * DupliCountSelect inComponent:2 animated:YES];
+    [self.pickerView selectRow:[self selectWeekDateIndex:self.timePickerModel.weekDate] + 7 * DupliCountSelect inComponent:3 animated:YES];
 }
 
 #pragma mark - 将字符串转换为日期时间格式
@@ -139,16 +139,16 @@
     NSInteger result = 0;
     switch (component) {
         case 0:
-            result = self.yearDate.count;//根据数组的元素个数返回几行数据
+            result = self.yearDate.count * DupliCount;//根据数组的元素个数返回几行数据
             break;
         case 1:
-            result = self.mouthDate.count;
+            result = self.mouthDate.count * DupliCount;
             break;
         case 2:
-            result = self.dayDate.count;//根据数组的元素个数返回几行数据
+            result = self.dayDate.count * DupliCount;//根据数组的元素个数返回几行数据
             break;
         case 3:
-            result = 7;
+            result = 7 * DupliCount;
             break;
         default:
             break;
@@ -172,17 +172,17 @@
     NSString * title = nil;
     switch (component) {
         case 0:
-            title = [NSString stringWithFormat:@"%@年",self.yearDate[row]];
+            title = [NSString stringWithFormat:@"%@年",self.yearDate[row % self.yearDate.count]];
             break;
         case 1:
-            title = [NSString stringWithFormat:@"%@月",self.mouthDate[row]];
+            title = [NSString stringWithFormat:@"%@月",self.mouthDate[row % self.mouthDate.count]];
             break;
         case 2:
-            title = [NSString stringWithFormat:@"%@日",self.dayDate[row]];
+            title = [NSString stringWithFormat:@"%@日",self.dayDate[row % self.dayDate.count]];
             break;
             
         case 3:
-            title = [NSString stringWithFormat:@"%@",self.weekDate[row]];
+            title = [NSString stringWithFormat:@"%@",self.weekDate[row % self.weekDate.count]];
             break;
         
         default:
@@ -197,15 +197,13 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
     if (component == 0) {
-        self.timePickerModel.yearDate = self.yearDate[row];
+        self.timePickerModel.yearDate = self.yearDate[row % self.yearDate.count];
     } else if (component == 1) {
-        self.timePickerModel.mouthDate = self.mouthDate[row];
+        self.timePickerModel.mouthDate = self.mouthDate[row % self.mouthDate.count];
     } else if (component == 2) {
-        self.timePickerModel.dayDate = self.dayDate[row];
-        
+        self.timePickerModel.dayDate = self.dayDate[row % self.dayDate.count];
     } else if (component == 3) {
        
-        
     }
     
     if (component <= 1) {
@@ -213,12 +211,12 @@
         int chosenMonth;
         
         if (component == 0) {
-            chosenYear = [self.yearDate[row] intValue];
+            chosenYear = [self.yearDate[row % self.yearDate.count] intValue];
             chosenMonth = [self.timePickerModel.mouthDate intValue];
             
         } else if (component == 1) {
             chosenYear = [self.timePickerModel.yearDate intValue];
-            chosenMonth = [self.mouthDate[row] intValue];
+            chosenMonth = [self.mouthDate[row % self.mouthDate.count] intValue];
             
         }
         int DayDateLen = [self updateDayDateYear:chosenYear chosenMonth:chosenMonth];
